@@ -37,6 +37,7 @@ public class frmDangNhap extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(ValidateBefore() == false) return;
+
                 TrangThai trangThai = TaiKhoanBLL.getInstance().DangNhap(txtUsername.getText(),txtPassword.getText());
                 if(trangThai == TrangThai.THANH_CONG)
                 {
@@ -82,7 +83,6 @@ public class frmDangNhap extends JFrame {
             }
         });
     }
-
     private boolean ValidateBefore() {
         if(txtUsername.getText().length() < 6)
         {
@@ -106,5 +106,4 @@ public class frmDangNhap extends JFrame {
         }
         return true;
     }
-
 }
