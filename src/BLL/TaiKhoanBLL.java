@@ -1,6 +1,7 @@
 package BLL;
 
 import DAL.TaiKhoanDAL;
+import DTO.TaiKhoan;
 import DTO.TrangThai;
 
 public class TaiKhoanBLL {
@@ -15,7 +16,11 @@ public class TaiKhoanBLL {
         return TaiKhoanDAL.getInstance().DangKy(username, password);
     }
 
-    public TrangThai DangNhap(String username, String password) {
+    public TaiKhoan DangNhap(String username, String password) {
         return TaiKhoanDAL.getInstance().DangNhap(username, password);
+    }
+
+    public TrangThai DoiMatKhau(String username, String newPassword) {
+        return TaiKhoanDAL.getInstance().DoiMatKhau(username, newPassword);
     }
 }

@@ -1,8 +1,14 @@
 package DTO;
 
 public class TaiKhoan {
+    private int taiKhoanId;
     private String username;
     private String hashPassword;
+    private  int getTaiKhoanId()
+    {
+       return  taiKhoanId;
+    }
+
 
     public String getUsername() {
         return username;
@@ -20,7 +26,8 @@ public class TaiKhoan {
         this.hashPassword = hashPassword;
     }
 
-    public TaiKhoan(String username, String hashPassword) {
+    public TaiKhoan(int taiKhoanId, String username, String hashPassword) {
+        this.taiKhoanId = taiKhoanId;
         this.username = username;
         this.hashPassword = hashPassword;
     }

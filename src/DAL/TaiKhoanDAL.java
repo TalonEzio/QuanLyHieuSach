@@ -4,8 +4,6 @@ import DTO.TaiKhoan;
 import DTO.TrangThai;
 import org.mindrot.jbcrypt.BCrypt;
 
-import javax.swing.*;
-import javax.xml.crypto.Data;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,23 +36,35 @@ public class TaiKhoanDAL {
         }
     }
 
-    public TrangThai DangNhap(String username, String password) {
-        TrangThai trangThai = TrangThai.THAT_BAI;
+    public TaiKhoan DangNhap(String username, String password) {
+        TaiKhoan taiKhoan =null;
         try {
             CallableStatement callableStatement = DatabaseAccess.getInstance().getConnection().prepareCall("{call usp_DangNhap(?)}");
 
             ResultSet resultSet = DatabaseAccess.getInstance().getData(callableStatement, new Object[]{username});
             if (resultSet.next()) {
-                TaiKhoan taiKhoan = new TaiKhoan(resultSet.getString(1), resultSet.getString(2));
-                if (BCrypt.checkpw(password, taiKhoan.getHashPassword())) ;
+                taiKhoan = new TaiKhoan(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3));
+                if (BCrypt.checkpw(password, taiKhoan.getHashPassword()))
                 {
-                    trangThai = TrangThai.THANH_CONG;
+                    return taiKhoan;
                 }
             }
+            return null;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return trangThai;
     }
+    public TrangThai DoiMatKhau(String username, String newPassword) {
+        String hashPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt(iteratorSalt));
+        try {
+            CallableStatement callableStatement = DatabaseAccess.getInstance().getConnection().prepareCall("{call usp_DoiMatKhau(?,?)}");
+            int rowsAffected = DatabaseAccess.getInstance().getRowsAffected(callableStatement, new Object[]{username, hashPassword});
 
+            if (rowsAffected > 0) return TrangThai.THANH_CONG;
+
+            return TrangThai.THAT_BAI;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

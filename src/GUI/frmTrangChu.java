@@ -1,5 +1,7 @@
 package GUI;
 
+import DTO.TaiKhoan;
+import GUI.SubFrame.ChangePasswordListerner;
 import GUI.SubFrame.IGetMainPanel;
 import GUI.SubFrame.frmDoiMatKhau;
 import GUI.SubFrame.frmWelcome;
@@ -24,13 +26,27 @@ public class frmTrangChu extends JFrame {
     private JPanel pnlMenu;
     private JPanel pnlDetail;
     private JButton btnTrangChu;
+    private final TaiKhoan taiKhoan;
+    private frmDangNhap dangNhap;
 
-    Hashtable<String,JPanel> subFrame = new Hashtable<>();
-    public frmTrangChu(JFrame loginFrame) {
+    public frmDangNhap getDangNhap() {
+        return dangNhap;
+    }
+
+    public void setDangNhap(frmDangNhap dangNhap) {
+        this.dangNhap = dangNhap;
+    }
+
+    Hashtable<String, JFrame> subFrame = new Hashtable<>();
+
+    public frmTrangChu(JFrame loginFrame, TaiKhoan taiKhoan) {
         this.setTitle("Trang chủ");
+        this.taiKhoan = taiKhoan;
         initComponents();
+        setDangNhap((frmDangNhap) loginFrame);
         addEvents(this, loginFrame);
     }
+
 
     private void addEvents(JFrame mainFrame, JFrame loginFrame) {
         mainFrame.addWindowListener(new WindowAdapter() {
@@ -45,15 +61,15 @@ public class frmTrangChu extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 Window window = SwingUtilities.getWindowAncestor(btnThoat);
                 if (window instanceof JFrame) {
-                    WindowEvent event = new WindowEvent((JFrame) window, WindowEvent.WINDOW_CLOSING);
-                    ((JFrame) window).dispatchEvent(event);
+                    WindowEvent event = new WindowEvent(window, WindowEvent.WINDOW_CLOSING);
+                    window.dispatchEvent(event);
                 }
             }
         });
         btnDMK.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    showScreen("frmDoiMatKhau");
+                showScreen("frmDoiMatKhau");
             }
         });
         btnTrangChu.addActionListener(new ActionListener() {
@@ -77,27 +93,34 @@ public class frmTrangChu extends JFrame {
     }
 
     private void loadSubFrame(JPanel pnlDetail) {
-        AddSubFrame(pnlDetail,new frmDoiMatKhau(false));
+        AddSubFrame(pnlDetail, new frmDoiMatKhau(false));
         //add last, show first :>
-        AddSubFrame(pnlDetail,new frmWelcome(false));
+        AddSubFrame(pnlDetail, new frmWelcome(false));
 
     }
 
-    private void AddSubFrame(JPanel pnlDetail,JFrame frame) {
-        JPanel pnlContent =  ((IGetMainPanel)frame).getMainPanel();
-        String name = ((IGetMainPanel)frame).getName();
+    private void AddSubFrame(JPanel pnlDetail, JFrame frame) {
 
-        if(subFrame.get(name) != null)
-        {
+        String name = ((IGetMainPanel) frame).getName();
+        if (subFrame.get(name) != null) {
             showScreen(name);
-        }
-        else
-        {
+        } else {
+            subFrame.put(name, frame);
+
+            if (frame instanceof frmDoiMatKhau) {
+                JButton btnDoiMatKhau = ((frmDoiMatKhau) frame).getBtnDoiMatKhau();
+                JPasswordField txtMKHT =((frmDoiMatKhau) frame).getTxtMKHT();
+                JPasswordField txtMKMoi=((frmDoiMatKhau) frame).getTxtMKMoi();
+                JPasswordField txtXacNhan = ((frmDoiMatKhau) frame).getTxtXacNhan();
+                btnDoiMatKhau.addActionListener(new ChangePasswordListerner(taiKhoan,txtMKHT,txtMKMoi,txtXacNhan,frmTrangChu.this,(frmDoiMatKhau) frame));
+            }
+
+            JPanel pnlContent = ((IGetMainPanel) frame).getMainPanel();
             pnlDetail.add(pnlContent, name);
-            subFrame.put(name,pnlContent);
             showScreen(name);
         }
     }
+
     public void showScreen(String name) {
         CardLayout cardLayout = (CardLayout) pnlDetail.getLayout();
         cardLayout.show(pnlDetail, name);
@@ -107,16 +130,17 @@ public class frmTrangChu extends JFrame {
 
         Component[] listComponent = panel.getComponents();
         for (Component component : listComponent) {
-            if (component instanceof JButton) {
-                JButton button = (JButton) component;
-                button.setMargin(new Insets(10,10,10,10));
+            if (component instanceof JButton button) {
+                button.setMargin(new Insets(10, 10, 10, 10));
             }
         }
     }
+
     private void ChangeLookAndFeel() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+                 UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
     }

@@ -2,6 +2,7 @@ package GUI;
 
 import BLL.TaiKhoanBLL;
 import DAL.TaiKhoanDAL;
+import DTO.TaiKhoan;
 import DTO.TrangThai;
 
 import javax.swing.*;
@@ -46,14 +47,13 @@ public class frmDangNhap extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (ValidateBefore() == false) return;
 
-                TrangThai trangThai = TaiKhoanBLL.getInstance().DangNhap(txtUsername.getText(), txtPassword.getText());
-                if (trangThai == TrangThai.THANH_CONG) {
+                TaiKhoan taiKhoan = TaiKhoanBLL.getInstance().DangNhap(txtUsername.getText(), txtPassword.getText());
+                if (taiKhoan != null) {
                     JOptionPane.showMessageDialog(null, "Đăng nhập thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     setVisible(false);
-                    new frmTrangChu(frmDangNhap.this).setVisible(true);
+                    new frmTrangChu(frmDangNhap.this,taiKhoan).setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(null, "Đăng nhập thất bại, vui lòng thử lại!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-
                 }
             }
         });
@@ -72,7 +72,7 @@ public class frmDangNhap extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (ValidateBefore() == false) return;
-                TrangThai trangThai = TaiKhoanDAL.getInstance().DangKy(txtUsername.getText(), txtPassword.getText());
+                TrangThai trangThai = TaiKhoanBLL.getInstance().DangKy(txtUsername.getText(), txtPassword.getText());
                 if (trangThai == TrangThai.THANH_CONG) {
                     JOptionPane.showMessageDialog(null, "Đăng ký thành công!, vui lòng đăng nhập!", "Trạng thái", JOptionPane.INFORMATION_MESSAGE);
                 } else if (trangThai == TrangThai.DA_TON_TAI) {
