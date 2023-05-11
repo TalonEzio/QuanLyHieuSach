@@ -78,9 +78,8 @@ public class DatabaseAccess {
         return result;
     }
 
-    public int getRowsAffected(CallableStatement cstmt) throws SQLException
-    {
-        return getRowsAffected(cstmt,null);
+    public int getRowsAffected(CallableStatement cstmt) throws SQLException {
+        return getRowsAffected(cstmt, null);
     }
 
 }

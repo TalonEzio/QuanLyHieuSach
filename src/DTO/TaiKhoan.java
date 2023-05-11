@@ -1,8 +1,8 @@
 package DTO;
 
 public class TaiKhoan {
-    private  String username;
-    private  String hashPassword;
+    private String username;
+    private String hashPassword;
 
     public String getUsername() {
         return username;

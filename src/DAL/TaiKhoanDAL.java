@@ -48,7 +48,7 @@ public class TaiKhoanDAL {
                 TaiKhoan taiKhoan = new TaiKhoan(resultSet.getString(1), resultSet.getString(2));
                 if (BCrypt.checkpw(password, taiKhoan.getHashPassword())) ;
                 {
-                    trangThai =  TrangThai.THANH_CONG;
+                    trangThai = TrangThai.THANH_CONG;
                 }
             }
         } catch (SQLException e) {
