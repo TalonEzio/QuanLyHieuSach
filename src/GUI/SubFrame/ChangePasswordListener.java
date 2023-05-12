@@ -1,7 +1,6 @@
 package GUI.SubFrame;
 
 import BLL.TaiKhoanBLL;
-import DAL.TaiKhoanDAL;
 import DTO.TaiKhoan;
 import DTO.TrangThai;
 import GUI.frmTrangChu;
@@ -11,11 +10,11 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ChangePasswordListerner implements ActionListener {
+public class ChangePasswordListener implements ActionListener {
     private TaiKhoan taiKhoan;
     JPasswordField txtMKHT, txtMKMoi, txtMKXN;
     private frmTrangChu trangChu;
-    private  frmDoiMatKhau doiMatKhau;
+    private frmThongTinTaiKhoan doiMatKhau;
     @Override
     public void actionPerformed(ActionEvent e) {
         if(validateBeforeChange(taiKhoan) == false)return;
@@ -62,7 +61,7 @@ public class ChangePasswordListerner implements ActionListener {
         }
         return true;
     }
-    public ChangePasswordListerner(TaiKhoan taiKhoan, JPasswordField txtMKHT, JPasswordField txtMKMoi, JPasswordField txtMKXN, frmTrangChu trangChu,frmDoiMatKhau doiMatKhau)
+    public ChangePasswordListener(TaiKhoan taiKhoan, JPasswordField txtMKHT, JPasswordField txtMKMoi, JPasswordField txtMKXN, frmTrangChu trangChu, frmThongTinTaiKhoan doiMatKhau)
     {
         this.taiKhoan = taiKhoan;
         this.txtMKHT = txtMKHT;

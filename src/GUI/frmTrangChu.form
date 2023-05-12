@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="GUI.frmTrangChu">
   <grid id="27dc6" binding="pnlMain" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="1096" height="532"/>
+      <xy x="20" y="20" width="1096" height="545"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -18,9 +18,14 @@
               <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <background color="-327681"/>
               <borderPainted value="true"/>
               <defaultCapable value="true"/>
               <font name="UTM Avo" size="16"/>
+              <hideActionText value="false"/>
+              <horizontalAlignment value="10"/>
+              <horizontalTextPosition value="4"/>
+              <icon value="Resources/iconQuanLySach.png"/>
               <text value="Quản lý sách"/>
             </properties>
           </component>
@@ -29,46 +34,15 @@
               <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <background color="-327681"/>
               <borderPainted value="true"/>
               <defaultCapable value="true"/>
               <font name="UTM Avo" size="16"/>
+              <hideActionText value="false"/>
+              <horizontalAlignment value="10"/>
+              <horizontalTextPosition value="4"/>
+              <icon value="Resources/iconQuanLyKhachHang.png"/>
               <text value="Quản lý khách hàng"/>
-            </properties>
-          </component>
-          <component id="a3809" class="javax.swing.JButton" binding="btnQLNV">
-            <constraints>
-              <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <borderPainted value="true"/>
-              <defaultCapable value="true"/>
-              <font name="UTM Avo" size="16"/>
-              <text value="Quản lý nhân viên"/>
-            </properties>
-          </component>
-          <component id="b9172" class="javax.swing.JButton" binding="btnQLHD">
-            <constraints>
-              <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <alignmentY value="0.5"/>
-              <autoscrolls value="false"/>
-              <borderPainted value="true"/>
-              <contentAreaFilled value="true"/>
-              <defaultCapable value="true"/>
-              <font name="UTM Avo" size="16"/>
-              <text value="Quản lý hóa đơn"/>
-            </properties>
-          </component>
-          <component id="54b2" class="javax.swing.JButton" binding="btnDMK">
-            <constraints>
-              <grid row="11" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <borderPainted value="true"/>
-              <defaultCapable value="true"/>
-              <font name="UTM Avo" size="16"/>
-              <text value="Đổi mật khẩu"/>
             </properties>
           </component>
           <component id="4bbff" class="javax.swing.JButton" binding="btnThoat">
@@ -79,6 +53,9 @@
               <borderPainted value="true"/>
               <defaultCapable value="true"/>
               <font name="UTM Avo" size="16"/>
+              <horizontalAlignment value="10"/>
+              <horizontalTextPosition value="4"/>
+              <icon value="Resources/iconThoat.png"/>
               <text value="Thoát"/>
               <verticalAlignment value="0"/>
             </properties>
@@ -158,20 +135,59 @@
               <grid row="18" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
             </constraints>
           </vspacer>
-          <component id="68bd2" class="javax.swing.JButton" binding="btnTrangChu">
-            <constraints>
-              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <font name="UTM Avo" size="16"/>
-              <text value="Trang chủ"/>
-            </properties>
-          </component>
           <hspacer id="948c7">
             <constraints>
               <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
           </hspacer>
+          <component id="4317" class="javax.swing.JButton" binding="btnTrangChu">
+            <constraints>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name="UTM Avo" size="16"/>
+              <hideActionText value="false"/>
+              <horizontalAlignment value="10"/>
+              <horizontalTextPosition value="4"/>
+              <icon value="Resources/iconTrangChu.png"/>
+              <text value="Trang chủ"/>
+            </properties>
+          </component>
+          <component id="b9172" class="javax.swing.JButton" binding="btnQLHD">
+            <constraints>
+              <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <alignmentY value="0.5"/>
+              <autoscrolls value="false"/>
+              <background color="-327681"/>
+              <borderPainted value="true"/>
+              <contentAreaFilled value="true"/>
+              <defaultCapable value="true"/>
+              <font name="UTM Avo" size="16"/>
+              <hideActionText value="false"/>
+              <horizontalAlignment value="10"/>
+              <horizontalTextPosition value="4"/>
+              <icon value="Resources/iconQuanLyHoaDon.png"/>
+              <text value="Quản lý hóa đơn"/>
+            </properties>
+          </component>
+          <component id="54b2" class="javax.swing.JButton" binding="btnDMK">
+            <constraints>
+              <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-327681"/>
+              <borderPainted value="true"/>
+              <defaultCapable value="true"/>
+              <font name="UTM Avo" size="16"/>
+              <hideActionText value="false"/>
+              <horizontalAlignment value="10"/>
+              <horizontalTextPosition value="4"/>
+              <icon value="Resources/iconThongTinTaiKhoan.png"/>
+              <text value="Thông tin tài khoản"/>
+            </properties>
+          </component>
         </children>
       </grid>
       <grid id="74f32" binding="pnlDetail" layout-manager="CardLayout" hgap="0" vgap="0">

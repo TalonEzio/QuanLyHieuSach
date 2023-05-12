@@ -1,10 +1,7 @@
 package GUI;
 
 import DTO.TaiKhoan;
-import GUI.SubFrame.ChangePasswordListerner;
-import GUI.SubFrame.IGetMainPanel;
-import GUI.SubFrame.frmDoiMatKhau;
-import GUI.SubFrame.frmWelcome;
+import GUI.SubFrame.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +16,6 @@ public class frmTrangChu extends JFrame {
     private JPanel pnlMain;
     private JButton btnQLS;
     private JButton btnQLBH;
-    private JButton btnQLNV;
     private JButton btnQLHD;
     private JButton btnDMK;
     private JButton btnThoat;
@@ -42,7 +38,9 @@ public class frmTrangChu extends JFrame {
     public frmTrangChu(JFrame loginFrame, TaiKhoan taiKhoan) {
         this.setTitle("Trang chủ");
         this.taiKhoan = taiKhoan;
+
         initComponents();
+
         setDangNhap((frmDangNhap) loginFrame);
         addEvents(this, loginFrame);
     }
@@ -69,7 +67,7 @@ public class frmTrangChu extends JFrame {
         btnDMK.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                showScreen("frmDoiMatKhau");
+                showScreen("frmThongTinTaiKhoan");
             }
         });
         btnTrangChu.addActionListener(new ActionListener() {
@@ -83,7 +81,6 @@ public class frmTrangChu extends JFrame {
     void initComponents() {
         this.setContentPane(pnlMain);
 
-        ChangeLookAndFeel();
         loadSubFrame(pnlDetail);
         setMargin(pnlMenu);
 
@@ -93,7 +90,7 @@ public class frmTrangChu extends JFrame {
     }
 
     private void loadSubFrame(JPanel pnlDetail) {
-        AddSubFrame(pnlDetail, new frmDoiMatKhau(false));
+        AddSubFrame(pnlDetail, new frmThongTinTaiKhoan(false));
         //add last, show first :>
         AddSubFrame(pnlDetail, new frmWelcome(false));
 
@@ -107,12 +104,18 @@ public class frmTrangChu extends JFrame {
         } else {
             subFrame.put(name, frame);
 
-            if (frame instanceof frmDoiMatKhau) {
-                JButton btnDoiMatKhau = ((frmDoiMatKhau) frame).getBtnDoiMatKhau();
-                JPasswordField txtMKHT =((frmDoiMatKhau) frame).getTxtMKHT();
-                JPasswordField txtMKMoi=((frmDoiMatKhau) frame).getTxtMKMoi();
-                JPasswordField txtXacNhan = ((frmDoiMatKhau) frame).getTxtXacNhan();
-                btnDoiMatKhau.addActionListener(new ChangePasswordListerner(taiKhoan,txtMKHT,txtMKMoi,txtXacNhan,frmTrangChu.this,(frmDoiMatKhau) frame));
+            if (frame instanceof frmThongTinTaiKhoan) {
+
+                frmThongTinTaiKhoan thongTinTaiKhoan =(frmThongTinTaiKhoan)frame;
+                JButton btnDoiMatKhau = ((frmThongTinTaiKhoan) frame).getBtnDoiMatKhau();
+                JPasswordField txtMKHT =((frmThongTinTaiKhoan) frame).getTxtMKHT();
+                JPasswordField txtMKMoi=((frmThongTinTaiKhoan) frame).getTxtMKMoi();
+                JPasswordField txtXacNhan = ((frmThongTinTaiKhoan) frame).getTxtXacNhan();
+                //Handle Change Password
+                btnDoiMatKhau.addActionListener(new ChangePasswordListener(taiKhoan,txtMKHT,txtMKMoi,txtXacNhan,frmTrangChu.this,thongTinTaiKhoan));
+                //Handle Delete Account
+                JButton btnXoaTaiKhoan = thongTinTaiKhoan.getBtnXoaTaiKhoan();
+                btnXoaTaiKhoan.addActionListener(new DeleteAccountListener(taiKhoan,frmTrangChu.this,thongTinTaiKhoan));
             }
 
             JPanel pnlContent = ((IGetMainPanel) frame).getMainPanel();
@@ -133,15 +136,6 @@ public class frmTrangChu extends JFrame {
             if (component instanceof JButton button) {
                 button.setMargin(new Insets(10, 10, 10, 10));
             }
-        }
-    }
-
-    private void ChangeLookAndFeel() {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
-                 UnsupportedLookAndFeelException e) {
-            e.printStackTrace();
         }
     }
 

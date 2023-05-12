@@ -1,7 +1,6 @@
 package GUI;
 
 import BLL.TaiKhoanBLL;
-import DAL.TaiKhoanDAL;
 import DTO.TaiKhoan;
 import DTO.TrangThai;
 
@@ -19,28 +18,18 @@ public class frmDangNhap extends JFrame {
 
     public frmDangNhap() {
         this.setTitle("Đăng nhập");
-
-        String password = "password";
-
         initComponents();
         addEvents();
     }
 
     private void initComponents() {
-        ChangeLookAndFeel();
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.setContentPane(pnlMain);
         this.setSize(900, 450);
         this.setLocationRelativeTo(null);
         this.getRootPane().setDefaultButton(btnDangNhap);
     }
-    private void ChangeLookAndFeel() {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-            e.printStackTrace();
-        }
-    }
+
     private void addEvents() {
         btnDangNhap.addActionListener(new ActionListener() {
             @Override
@@ -49,8 +38,10 @@ public class frmDangNhap extends JFrame {
 
                 TaiKhoan taiKhoan = TaiKhoanBLL.getInstance().DangNhap(txtUsername.getText(), txtPassword.getText());
                 if (taiKhoan != null) {
+
                     JOptionPane.showMessageDialog(null, "Đăng nhập thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     setVisible(false);
+                    clearText();
                     new frmTrangChu(frmDangNhap.this,taiKhoan).setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(null, "Đăng nhập thất bại, vui lòng thử lại!", "Thông báo", JOptionPane.ERROR_MESSAGE);
@@ -102,5 +93,11 @@ public class frmDangNhap extends JFrame {
             return false;
         }
         return true;
+    }
+    void clearText()
+    {
+        txtPassword.setText("");
+        txtUsername.setText("");
+        txtUsername.requestFocus();
     }
 }

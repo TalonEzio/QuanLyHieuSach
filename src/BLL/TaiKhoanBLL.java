@@ -23,4 +23,8 @@ public class TaiKhoanBLL {
     public TrangThai DoiMatKhau(String username, String newPassword) {
         return TaiKhoanDAL.getInstance().DoiMatKhau(username, newPassword);
     }
+
+    public TrangThai XoaTaiKhoan(String username) {
+        return TaiKhoanDAL.getInstance().XoaTaiKhoan(username);
+    }
 }

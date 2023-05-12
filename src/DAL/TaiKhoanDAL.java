@@ -67,4 +67,16 @@ public class TaiKhoanDAL {
             throw new RuntimeException(e);
         }
     }
+    public TrangThai XoaTaiKhoan(String username) {
+        try {
+            CallableStatement callableStatement = DatabaseAccess.getInstance().getConnection().prepareCall("{call usp_XoaTaiKhoan(?)}");
+            int rowsAffected = DatabaseAccess.getInstance().getRowsAffected(callableStatement, new Object[]{username});
+
+            if (rowsAffected > 0) return TrangThai.THANH_CONG;
+
+            return TrangThai.THAT_BAI;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

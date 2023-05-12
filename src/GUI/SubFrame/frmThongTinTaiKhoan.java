@@ -1,15 +1,11 @@
 package GUI.SubFrame;
 
 import DTO.TaiKhoan;
-import org.mindrot.jbcrypt.BCrypt;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.CallableStatement;
 
-public class frmDoiMatKhau extends  JFrame implements  IGetMainPanel{
+public class frmThongTinTaiKhoan extends  JFrame implements  IGetMainPanel{
     private JPasswordField txtMKHT;
     private JPasswordField txtMKMoi;
     private JPasswordField txtXacNhan;
@@ -35,7 +31,11 @@ public class frmDoiMatKhau extends  JFrame implements  IGetMainPanel{
     private JPanel pnlMain;
     private JPanel pnlDetail;
     private JLabel lblImage;
+    private JButton btnXoaTaiKhoan;
 
+    public JButton getBtnXoaTaiKhoan() {
+        return btnXoaTaiKhoan;
+    }
     private  TaiKhoan taiKhoan;
 
     public TaiKhoan getTaiKhoan() {
@@ -46,7 +46,7 @@ public class frmDoiMatKhau extends  JFrame implements  IGetMainPanel{
         this.taiKhoan = taiKhoan;
     }
 
-    public frmDoiMatKhau(boolean visible) {
+    public frmThongTinTaiKhoan(boolean visible) {
         this.setVisible(visible);
         initComponents();
     }
@@ -56,6 +56,16 @@ public class frmDoiMatKhau extends  JFrame implements  IGetMainPanel{
         this.setSize(600, 600);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setMargin(pnlMain);
+    }
+    private void setMargin(JPanel panel) {
+
+        Component[] listComponent = panel.getComponents();
+        for (Component component : listComponent) {
+            if (component instanceof JButton button) {
+                button.setMargin(new Insets(10, 10, 10, 10));
+            }
+        }
     }
 
     @Override
@@ -65,7 +75,7 @@ public class frmDoiMatKhau extends  JFrame implements  IGetMainPanel{
     @Override
     public String getName()
     {
-        return "frmDoiMatKhau";
+        return "frmThongTinTaiKhoan";
     }
 
 }
