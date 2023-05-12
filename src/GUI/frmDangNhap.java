@@ -66,6 +66,7 @@ public class frmDangNhap extends JFrame {
                 TrangThai trangThai = TaiKhoanBLL.getInstance().DangKy(txtUsername.getText(), txtPassword.getText());
                 if (trangThai == TrangThai.THANH_CONG) {
                     JOptionPane.showMessageDialog(null, "Đăng ký thành công!, vui lòng đăng nhập!", "Trạng thái", JOptionPane.INFORMATION_MESSAGE);
+                    clearText();
                 } else if (trangThai == TrangThai.DA_TON_TAI) {
                     JOptionPane.showMessageDialog(null, "Tài khoản đã tồn tại, vui lòng thử lại!", "Trạng thái", JOptionPane.ERROR_MESSAGE);
                 } else {

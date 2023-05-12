@@ -76,6 +76,12 @@ public class frmTrangChu extends JFrame {
                 showScreen("frmWelcome");
             }
         });
+        btnQLS.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showScreen("frmQuanLySach");
+            }
+        });
     }
 
     void initComponents() {
@@ -85,18 +91,19 @@ public class frmTrangChu extends JFrame {
         setMargin(pnlMenu);
 
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        this.setSize(1200, 600);
+        this.setMinimumSize(new Dimension(1200,600));
         this.setLocationRelativeTo(null);
     }
 
     private void loadSubFrame(JPanel pnlDetail) {
-        AddSubFrame(pnlDetail, new frmThongTinTaiKhoan(false));
+        addSubFrame(pnlDetail, new frmThongTinTaiKhoan(false));
+        addSubFrame(pnlDetail,new frmQuanLySach());
         //add last, show first :>
-        AddSubFrame(pnlDetail, new frmWelcome(false));
+        addSubFrame(pnlDetail, new frmWelcome(false));
 
     }
 
-    private void AddSubFrame(JPanel pnlDetail, JFrame frame) {
+    private void addSubFrame(JPanel pnlDetail, JFrame frame) {
 
         String name = ((IGetMainPanel) frame).getName();
         if (subFrame.get(name) != null) {

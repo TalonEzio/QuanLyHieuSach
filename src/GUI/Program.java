@@ -1,6 +1,5 @@
 package GUI;
-
-import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.formdev.flatlaf.*;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 
 import javax.swing.*;
@@ -8,7 +7,7 @@ import javax.swing.*;
 public class Program {
     public static void main(String[] args) {
         try {
-            UIManager.setLookAndFeel(new FlatIntelliJLaf());
+            UIManager.setLookAndFeel(new FlatMacLightLaf());
         } catch ( UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
