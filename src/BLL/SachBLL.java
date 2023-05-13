@@ -2,6 +2,7 @@ package BLL;
 
 import DAL.SachDAL;
 import DTO.Sach;
+import DTO.TrangThai;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -26,8 +27,30 @@ public class SachBLL {
     }
 
     public ArrayList<Sach> laySach(int maNXB) {
-        ArrayList<Sach> dsSach = new ArrayList<Sach>();
         ResultSet resultSet = SachDAL.getInstance().laySach(maNXB);
+        return getListFromResultSet(resultSet);
+
+    }
+    public  ArrayList<Sach> timKiemSach(int maNXB,String input)
+    {
+        ResultSet resultSet = SachDAL.getInstance().timKiemSach(maNXB,input);
+        return getListFromResultSet(resultSet);
+    }
+    public TrangThai themSachMoi(Sach sach)
+    {
+        return SachDAL.getInstance().themSachMoi(sach);
+    }
+    public TrangThai capNhatSach(Sach sach)
+    {
+        return SachDAL.getInstance().capNhatSach(sach);
+    }
+    public TrangThai xoaSach(Sach sach)
+    {
+        return SachDAL.getInstance().xoaSach(sach);
+    }
+    ArrayList<Sach> getListFromResultSet(ResultSet resultSet)
+    {
+        ArrayList<Sach> dsSach = new ArrayList<Sach>();
 
         ImageIcon defaultImage = getDefaultImage();
         try {
@@ -47,26 +70,31 @@ public class SachBLL {
                 {
                     ByteArrayInputStream inputStream = new ByteArrayInputStream(imageData);
                     BufferedImage bufferedImage = ImageIO.read(inputStream);
-                    sach.setAnh(new ImageIcon(bufferedImage));
+                    int width = bufferedImage.getWidth();
+                    int height = bufferedImage.getHeight();
+                    if (width > 160 || height > 200) {
+                        Image scaledImage = bufferedImage.getScaledInstance(160, 200, Image.SCALE_SMOOTH);
+                        sach.setAnh(new ImageIcon(scaledImage));
+                    } else {
+                        sach.setAnh(new ImageIcon(bufferedImage));
+                    }
                 }
 
                 dsSach.add(sach);
             }
-
             resultSet.close();
             return dsSach;
         } catch (SQLException | IOException e) {
             return null;
         }
     }
-
-    private ImageIcon getDefaultImage() {
+    private ImageIcon getDefaultImage()
+    {
         URL imageURL = SachBLL.class.getResource("SachmacDinh.png");
         ImageIcon defaultImage = new ImageIcon(imageURL);
         Image newImg = defaultImage.getImage();
-        newImg = newImg.getScaledInstance(160,160,Image.SCALE_SMOOTH);
+        newImg = newImg.getScaledInstance(160,200,Image.SCALE_SMOOTH);
         defaultImage = new ImageIcon(newImg);
         return defaultImage;
     }
-
 }

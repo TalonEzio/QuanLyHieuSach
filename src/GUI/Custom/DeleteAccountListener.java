@@ -1,8 +1,9 @@
-package GUI.SubFrame;
+package GUI.Custom;
 
 import BLL.TaiKhoanBLL;
 import DTO.TaiKhoan;
 import DTO.TrangThai;
+import GUI.SubFrame.frmThongTinTaiKhoan;
 import GUI.frmTrangChu;
 
 import javax.swing.*;

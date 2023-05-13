@@ -20,7 +20,7 @@ public class JBookButton extends JButton {
         setSach(sach);
 
         setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(170,200));
+        setPreferredSize(new Dimension(170,220));
         ImageIcon icon = sach.getAnh();
         JLabel lbl = new JLabel();
         lbl.setIcon(icon);
