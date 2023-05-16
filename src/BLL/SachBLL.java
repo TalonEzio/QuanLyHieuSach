@@ -3,6 +3,7 @@ package BLL;
 import DAL.SachDAL;
 import DTO.Sach;
 import DTO.TrangThai;
+import Resources.ResourceClass;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -38,10 +39,12 @@ public class SachBLL {
     }
     public TrangThai themSachMoi(Sach sach)
     {
+        if(sach.getAnh() == null)sach.setAnh(getDefaultImage());
         return SachDAL.getInstance().themSachMoi(sach);
     }
     public TrangThai capNhatSach(Sach sach)
     {
+        if(sach.getAnh() == null)sach.setAnh(getDefaultImage());
         return SachDAL.getInstance().capNhatSach(sach);
     }
     public TrangThai xoaSach(Sach sach)
@@ -90,7 +93,7 @@ public class SachBLL {
     }
     private ImageIcon getDefaultImage()
     {
-        URL imageURL = SachBLL.class.getResource("SachmacDinh.png");
+        URL imageURL = ResourceClass.class.getResource("SachmacDinh.jpg");
         ImageIcon defaultImage = new ImageIcon(imageURL);
         Image newImg = defaultImage.getImage();
         newImg = newImg.getScaledInstance(160,200,Image.SCALE_SMOOTH);

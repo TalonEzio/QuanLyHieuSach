@@ -43,13 +43,14 @@ public class frmQuanLySach  extends  JFrame implements  IGetMainPanel{
     private JPanel pnlAnh;
     private  Sach current;
     private JTextField txtTimKiem;
+    private JButton btnXoaHinh;
 
     public frmQuanLySach()
     {
         initComponents();
         loadComboBox();
         createControls();
-        loadData(SachBLL.getInstance().laySach(1));
+        loadData(SachBLL.getInstance().laySach(0));
         addEvents();
     }
     void initComponents() {
@@ -61,6 +62,8 @@ public class frmQuanLySach  extends  JFrame implements  IGetMainPanel{
 
     private void loadComboBox() {
         ArrayList<NhaXuatBan> filter = new ArrayList<>();
+        NhaXuatBan defaultNXB = new NhaXuatBan(0,"Tất cả");
+        filter.add(defaultNXB);
         filter.addAll(NhaXuatBanBLL.getInstance().layNXB());
 
         DefaultComboBoxModel cmb1 = new DefaultComboBoxModel();
@@ -88,7 +91,6 @@ public class frmQuanLySach  extends  JFrame implements  IGetMainPanel{
     }
     private void loadData(ArrayList<Sach> dsSach) {
         pnlCenter.removeAll();
-
         for (int i = 0; i < dsSach.size(); i++) {
             JBookButton bookButton = new JBookButton(dsSach.get(i));
             bookButton.addActionListener(new ActionListener() {
@@ -107,17 +109,19 @@ public class frmQuanLySach  extends  JFrame implements  IGetMainPanel{
             });
             pnlCenter.add(bookButton);
         }
-
         pnlCenter.revalidate();
-    }
+        pnlCenter.repaint();
 
+    }
+    ArrayList<Sach> DSSachDuocChon = new ArrayList<>();
     private void addEvents() {
         cmbLoc.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(cmbLoc.getSelectedIndex() == -1)return;
-                resetInput();
+
                 NhaXuatBan nhaXuatBan = (NhaXuatBan) cmbLoc.getSelectedItem();
+                resetInput(nhaXuatBan.getMaNXB());
                 loadData(SachBLL.getInstance().laySach(nhaXuatBan.getMaNXB()));
             }
         });
@@ -172,8 +176,8 @@ public class frmQuanLySach  extends  JFrame implements  IGetMainPanel{
                 if(trangThai == TrangThai.THANH_CONG)
                 {
                     JOptionPane.showMessageDialog(null,"Thêm sách mới thành công","Trạng thái",JOptionPane.INFORMATION_MESSAGE);
-                    resetInput();
-                    cmbLoc.setSelectedIndex(sach.getMaNXB() - 1);
+                    resetInput(sach.getMaNXB());
+                    pnlCenter.revalidate();
                 }
                 else
                 {
@@ -192,8 +196,8 @@ public class frmQuanLySach  extends  JFrame implements  IGetMainPanel{
                 if(trangThai == TrangThai.THANH_CONG)
                 {
                     JOptionPane.showMessageDialog(null,"Cập nhật sách thành công","Trạng thái",JOptionPane.INFORMATION_MESSAGE);
-                    resetInput();
-                    cmbLoc.setSelectedIndex(sach.getMaNXB() - 1);
+                    resetInput(sach.getMaNXB());
+                    current = null;
                 }
                 else
                 {
@@ -209,8 +213,8 @@ public class frmQuanLySach  extends  JFrame implements  IGetMainPanel{
                 if(trangThai == TrangThai.THANH_CONG)
                 {
                     JOptionPane.showMessageDialog(null,"Xóa sách thành công","Trạng thái",JOptionPane.INFORMATION_MESSAGE);
-                    resetInput();
-                    cmbLoc.setSelectedIndex(current.getMaNXB() - 1);
+                    resetInput(current.getMaNXB());
+                    pnlCenter.revalidate();
                     current = null;
                 }
                 else
@@ -220,6 +224,13 @@ public class frmQuanLySach  extends  JFrame implements  IGetMainPanel{
             }
         });
 
+        btnXoaHinh.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                current.setAnh(null);
+                lblAnh.setIcon(null);
+            }
+        });
         txtTimKiem.getDocument().addDocumentListener(textChangedListener());
     }
     private  Sach getFromInput()
@@ -227,7 +238,8 @@ public class frmQuanLySach  extends  JFrame implements  IGetMainPanel{
         Sach sach = new Sach();
         sach.setTenSach(txtTenSach.getText());
         sach.setTacGia(txtTacGia.getText());
-        sach.setMaNXB(cmbNhaXuatBan.getSelectedIndex() + 1);
+        //sach.setMaNXB(cmbNhaXuatBan.getSelectedIndex() + 1);
+        sach.setMaNXB(((NhaXuatBan)cmbNhaXuatBan.getSelectedItem()).getMaNXB());
         sach.setSoTrang((int)numSoTrang.getValue());
         sach.setAnh((ImageIcon) lblAnh.getIcon());
         return sach;
@@ -264,32 +276,35 @@ public class frmQuanLySach  extends  JFrame implements  IGetMainPanel{
 
             @Override
             public void insertUpdate(DocumentEvent e) {
-                loadData(SachBLL.getInstance().timKiemSach(cmbLoc.getSelectedIndex() + 1,txtTimKiem.getText()));
+                loadData(SachBLL.getInstance().timKiemSach(cmbLoc.getSelectedIndex() ,txtTimKiem.getText()));
             }
             @Override
             public void removeUpdate(DocumentEvent e) {
-                loadData(SachBLL.getInstance().timKiemSach(cmbLoc.getSelectedIndex() + 1,txtTimKiem.getText()));
+                loadData(SachBLL.getInstance().timKiemSach(cmbLoc.getSelectedIndex() ,txtTimKiem.getText()));
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                loadData(SachBLL.getInstance().timKiemSach(cmbLoc.getSelectedIndex() + 1,txtTimKiem.getText()));
+                loadData(SachBLL.getInstance().timKiemSach(cmbLoc.getSelectedIndex() ,txtTimKiem.getText()));
 
             }
         };
         return documentListener;
     }
-    private void resetInput() {
+
+    private void resetInput(int maNXB) {
         txtTacGia.setText("");
         txtTimKiem.setText("");
         txtTenSach.setText("");
         numSoTrang.setValue(0);
         lblAnh.setIcon(null);
-        cmbNhaXuatBan.setSelectedIndex(-1);
+        cmbNhaXuatBan.setSelectedIndex(maNXB - 1);
+        cmbLoc.setSelectedIndex(maNXB);
+
     }
 
     private ImageIcon getDefaultImage() {
-        URL imageURL = ResourceClass.class.getResource("SachmacDinh.png");
+        URL imageURL = ResourceClass.class.getResource("SachmacDinh.jpg");
         ImageIcon defaultImage = new ImageIcon(imageURL);
         Image newImg = defaultImage.getImage();
         newImg = newImg.getScaledInstance(160,200,Image.SCALE_SMOOTH);

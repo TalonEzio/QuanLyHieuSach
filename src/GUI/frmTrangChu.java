@@ -17,7 +17,7 @@ public class frmTrangChu extends JFrame {
 
     private JPanel pnlMain;
     private JButton btnQLS;
-    private JButton btnQLBH;
+    private JButton btnQLKH;
     private JButton btnQLHD;
     private JButton btnDMK;
     private JButton btnThoat;
@@ -70,22 +70,31 @@ public class frmTrangChu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 showScreen("frmThongTinTaiKhoan");
+                frmTrangChu.this.setTitle("Thông tin tài khoản");
             }
         });
         btnTrangChu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 showScreen("frmWelcome");
+                frmTrangChu.this.setTitle("Trang chủ");
+
             }
         });
         btnQLS.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 showScreen("frmQuanLySach");
+                frmTrangChu.this.setTitle("Quản lý sách");
+            }
+        });
+        btnQLKH.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showScreen("frmKhachHang");
             }
         });
     }
-
     void initComponents() {
         this.setContentPane(pnlMain);
 
@@ -100,6 +109,7 @@ public class frmTrangChu extends JFrame {
     private void loadSubFrame(JPanel pnlDetail) {
         addSubFrame(pnlDetail, new frmThongTinTaiKhoan(false));
         addSubFrame(pnlDetail,new frmQuanLySach());
+        addSubFrame(pnlDetail,new frmKhachHang());
         //add last, show first :>
         addSubFrame(pnlDetail, new frmWelcome(false));
 

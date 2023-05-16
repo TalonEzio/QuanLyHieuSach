@@ -2,14 +2,18 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="GUI.SubFrame.frmQuanLySach">
   <grid id="27dc6" binding="pnlMain" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="941" height="535"/>
+      <xy x="20" y="20" width="1026" height="535"/>
     </constraints>
-    <properties/>
+    <properties>
+      <background color="-1"/>
+    </properties>
     <border type="none"/>
     <children>
       <grid id="15d78" binding="pnlThongTinSach" layout-manager="BorderLayout" hgap="0" vgap="0">
         <constraints border-constraint="Center"/>
-        <properties/>
+        <properties>
+          <background color="-1"/>
+        </properties>
         <border type="none"/>
         <children>
           <grid id="6fbf1" binding="pnlTimKiem" layout-manager="GridLayoutManager" row-count="1" column-count="8" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -86,10 +90,12 @@
           </grid>
         </children>
       </grid>
-      <grid id="5b41" binding="pnlChiTiet" layout-manager="GridLayoutManager" row-count="9" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="5b41" binding="pnlChiTiet" layout-manager="GridLayoutManager" row-count="9" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints border-constraint="East"/>
         <properties>
+          <background color="-1"/>
+          <enabled value="true"/>
           <font name="UTM Avo" size="16"/>
         </properties>
         <border type="none" title="Thông tin chi tiết" title-justification="2">
@@ -97,48 +103,6 @@
           <title-color color="-16777216"/>
         </border>
         <children>
-          <grid id="50d3b" layout-manager="GridLayoutManager" row-count="2" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
-            <constraints>
-              <grid row="8" column="0" row-span="1" col-span="4" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <component id="e07bc" class="javax.swing.JButton" binding="btnSua">
-                <constraints>
-                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <font name="UTM Avo" size="16"/>
-                  <text value="Sửa"/>
-                </properties>
-              </component>
-              <component id="f8a51" class="javax.swing.JButton" binding="btnThem">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <font name="UTM Avo" size="16"/>
-                  <text value="Thêm"/>
-                </properties>
-              </component>
-              <component id="e8a30" class="javax.swing.JButton" binding="btnXoa">
-                <constraints>
-                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <font name="UTM Avo" size="16"/>
-                  <text value="Xóa"/>
-                </properties>
-              </component>
-              <vspacer id="6ae33">
-                <constraints>
-                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-                </constraints>
-              </vspacer>
-            </children>
-          </grid>
           <component id="e4da" class="javax.swing.JTextArea" binding="txtTenSach">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
@@ -226,22 +190,13 @@
               <font name="UTM Avo" size="16"/>
             </properties>
           </component>
-          <component id="d4334" class="javax.swing.JButton" binding="btnAnh">
-            <constraints>
-              <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="138" height="30"/>
-              </grid>
-            </constraints>
-            <properties>
-              <font name="UTM Avo" size="16"/>
-              <text value="Chọn hình..."/>
-            </properties>
-          </component>
           <grid id="1c06a" binding="pnlAnh" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
             <constraints>
               <grid row="6" column="0" row-span="1" col-span="4" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-1"/>
+            </properties>
             <border type="none"/>
             <children>
               <component id="1bd4a" class="javax.swing.JLabel" binding="lblAnh">
@@ -254,9 +209,81 @@
           </grid>
           <vspacer id="8df7c">
             <constraints>
-              <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+              <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
             </constraints>
           </vspacer>
+          <grid id="50d3b" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="7" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="e07bc" class="javax.swing.JButton" binding="btnSua">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="UTM Avo" size="16"/>
+                  <text value="Sửa"/>
+                </properties>
+              </component>
+              <component id="e8a30" class="javax.swing.JButton" binding="btnXoa">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="UTM Avo" size="16"/>
+                  <text value="Xóa"/>
+                </properties>
+              </component>
+              <component id="f8a51" class="javax.swing.JButton" binding="btnThem">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="UTM Avo" size="16"/>
+                  <text value="Thêm"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="3ea23" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="d4334" class="javax.swing.JButton" binding="btnAnh">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="138" height="30"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <font name="UTM Avo" size="16"/>
+                  <text value="Chọn hình"/>
+                </properties>
+              </component>
+              <component id="d55d2" class="javax.swing.JButton" binding="btnXoaHinh">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="UTM Avo" size="16"/>
+                  <text value="Xóa hình"/>
+                </properties>
+              </component>
+              <hspacer id="dc8a7">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </hspacer>
+            </children>
+          </grid>
         </children>
       </grid>
     </children>

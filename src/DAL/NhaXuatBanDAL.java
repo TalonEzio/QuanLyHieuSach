@@ -6,7 +6,6 @@ import java.sql.SQLException;
 
 public class NhaXuatBanDAL {
     private static NhaXuatBanDAL instance;
-
     public static NhaXuatBanDAL getInstance() {
         if (instance == null) instance = new NhaXuatBanDAL();
         return instance;
@@ -19,5 +18,6 @@ public class NhaXuatBanDAL {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
     }
 }

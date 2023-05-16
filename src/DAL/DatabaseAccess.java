@@ -3,16 +3,18 @@ package DAL;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DatabaseAccess {
     private static DatabaseAccess instance;
 
     public static DatabaseAccess getInstance() {
-        if (instance == null) instance = new DatabaseAccess();
+        if (instance == null)
+        {
+            instance = new DatabaseAccess();
+            sqlServerDataSource = getSqlServerDataSource();
+            connection = createConnection();
+        }
         return instance;
     }
 
@@ -20,9 +22,10 @@ public class DatabaseAccess {
         return connection;
     }
 
-    private final Connection connection = createConnection();
+    private static Connection connection;
+    private static SQLServerDataSource sqlServerDataSource;
 
-    private Connection createConnection() {
+    private static SQLServerDataSource getSqlServerDataSource() {
         SQLServerDataSource ds = new SQLServerDataSource();
         ds.setServerName("TalonEzio\\SqlExpress");
         ds.setDatabaseName("QuanLyHieuSach");
@@ -30,12 +33,16 @@ public class DatabaseAccess {
         ds.setUser("sa");
         ds.setPassword("manhngu123");
         ds.setEncrypt("false");
+        return ds;
+    }
+
+    private static Connection createConnection() {
         try {
-            Connection conn = ds.getConnection();
-            return conn;
+            connection = sqlServerDataSource.getConnection();
         } catch (SQLServerException e) {
             throw new RuntimeException(e);
         }
+        return connection;
     }
 
     public ResultSet getData(CallableStatement cstmt, Object[] parameterList) throws SQLException {
@@ -50,10 +57,12 @@ public class DatabaseAccess {
                 cstmt.setObject(i + 1, parameterList[i]);
             }
             resultSet = cstmt.executeQuery();
+            return resultSet;
+
+
         } catch (SQLException ex) {
             throw ex;
         }
-        return resultSet;
     }
 
     public ResultSet getData(CallableStatement cstmt) throws SQLException {
@@ -69,13 +78,13 @@ public class DatabaseAccess {
         }
         try {
             for (int i = 0; i < parameterCount; i++) {
-                cstmt.setObject(i + 1, parameterList[i]);
+                    cstmt.setObject(i + 1, parameterList[i]);
             }
             result = cstmt.executeUpdate();
+            return result;
         } catch (SQLException ex) {
             throw ex;
         }
-        return result;
     }
 
     public int getRowsAffected(CallableStatement cstmt) throws SQLException {
