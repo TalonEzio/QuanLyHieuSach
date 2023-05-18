@@ -40,7 +40,6 @@ public class frmTrangChu extends JFrame {
     public frmTrangChu(JFrame loginFrame, TaiKhoan taiKhoan) {
         this.setTitle("Trang chủ");
         this.taiKhoan = taiKhoan;
-
         initComponents();
 
         setDangNhap((frmDangNhap) loginFrame);
@@ -92,11 +91,13 @@ public class frmTrangChu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 showScreen("frmKhachHang");
+                frmTrangChu.this.setTitle("Quản lý khách hàng");
             }
         });
     }
     void initComponents() {
         this.setContentPane(pnlMain);
+        this.setResizable(false);
 
         loadSubFrame(pnlDetail);
         setMargin(pnlMenu);

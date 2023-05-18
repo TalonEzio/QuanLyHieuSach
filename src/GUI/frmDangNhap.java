@@ -24,6 +24,7 @@ public class frmDangNhap extends JFrame {
 
     private void initComponents() {
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        this.setResizable(false);
         this.setContentPane(pnlMain);
         this.setSize(900, 450);
         this.setLocationRelativeTo(null);

@@ -41,7 +41,7 @@ public class frmQuanLySach  extends  JFrame implements  IGetMainPanel{
     private JButton btnXoa;
     private JLabel lblAnh;
     private JPanel pnlAnh;
-    private  Sach current;
+    private  Sach khachHangCurrent;
     private JTextField txtTimKiem;
     private JButton btnXoaHinh;
 
@@ -104,7 +104,7 @@ public class frmQuanLySach  extends  JFrame implements  IGetMainPanel{
                     cmbNhaXuatBan.setSelectedIndex(sach.getMaNXB() - 1);
                     lblAnh.setIcon(sach.getAnh());
 
-                    current = bookButton.getSach();
+                    khachHangCurrent = bookButton.getSach();
                 }
             });
             pnlCenter.add(bookButton);
@@ -191,13 +191,13 @@ public class frmQuanLySach  extends  JFrame implements  IGetMainPanel{
                 if(validateBefore() == false)return;
 
                 Sach sach = getFromInput();
-                sach.setMaSach(current.getMaSach());
+                sach.setMaSach(khachHangCurrent.getMaSach());
                 TrangThai trangThai = SachBLL.getInstance().capNhatSach(sach);
                 if(trangThai == TrangThai.THANH_CONG)
                 {
                     JOptionPane.showMessageDialog(null,"Cập nhật sách thành công","Trạng thái",JOptionPane.INFORMATION_MESSAGE);
                     resetInput(sach.getMaNXB());
-                    current = null;
+                    khachHangCurrent = null;
                 }
                 else
                 {
@@ -209,13 +209,13 @@ public class frmQuanLySach  extends  JFrame implements  IGetMainPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                TrangThai trangThai = SachBLL.getInstance().xoaSach(current);
+                TrangThai trangThai = SachBLL.getInstance().xoaSach(khachHangCurrent);
                 if(trangThai == TrangThai.THANH_CONG)
                 {
                     JOptionPane.showMessageDialog(null,"Xóa sách thành công","Trạng thái",JOptionPane.INFORMATION_MESSAGE);
-                    resetInput(current.getMaNXB());
+                    resetInput(khachHangCurrent.getMaNXB());
                     pnlCenter.revalidate();
-                    current = null;
+                    khachHangCurrent = null;
                 }
                 else
                 {
@@ -227,7 +227,7 @@ public class frmQuanLySach  extends  JFrame implements  IGetMainPanel{
         btnXoaHinh.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                current.setAnh(null);
+                khachHangCurrent.setAnh(null);
                 lblAnh.setIcon(null);
             }
         });

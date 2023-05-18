@@ -10,6 +10,7 @@ public class KhachHang {
     private  String diaChi;
     private  String soDienThoai;
 
+
     public int getMaKhachHang() {
         return maKhachHang;
     }

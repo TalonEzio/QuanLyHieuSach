@@ -128,7 +128,7 @@ public class WrapLayout extends FlowLayout
                 {
                     Dimension d = preferred ? m.getPreferredSize() : m.getMinimumSize();
 
-                    //  Can't add the component to current row. Start a new row.
+                    //  Can't add the component to khachHangCurrent row. Start a new row.
 
                     if (rowWidth + d.width > maxWidth)
                     {
