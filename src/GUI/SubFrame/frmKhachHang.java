@@ -382,6 +382,7 @@ public class frmKhachHang extends JFrame implements IGetMainPanel {
                 }
                 frmChiTietHoaDon chiTietHoaDon = new frmChiTietHoaDon(khachHangCurrent,hoaDonCurrent);
                 chiTietHoaDon.setVisible(true);
+                loadDaTa(khachHangCurrent.getMaKhachHang());
             }
         });
     }

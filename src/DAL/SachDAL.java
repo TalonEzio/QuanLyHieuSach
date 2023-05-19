@@ -79,7 +79,15 @@ public class SachDAL {
             throw new RuntimeException(e);
         }
     }
-
+    public ResultSet laySachTheoMa(int maSach)
+    {
+        try {
+            CallableStatement callableStatement = DatabaseAccess.getInstance().getConnection().prepareCall("{call usp_LaySachTheoMa(?)}");
+            return DatabaseAccess.getInstance().getData(callableStatement, new Object[]{maSach});
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     byte[] getInputImage(Image image) {
         BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
         Graphics2D g = bufferedImage.createGraphics();

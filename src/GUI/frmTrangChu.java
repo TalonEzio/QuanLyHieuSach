@@ -18,7 +18,6 @@ public class frmTrangChu extends JFrame {
     private JPanel pnlMain;
     private JButton btnQLS;
     private JButton btnQLKH;
-    private JButton btnQLHD;
     private JButton btnDMK;
     private JButton btnThoat;
     private JPanel pnlMenu;

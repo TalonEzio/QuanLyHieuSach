@@ -91,6 +91,45 @@ public class SachBLL {
             return null;
         }
     }
+    public Sach laySachTheoMa(int maSach)
+    {
+        ResultSet resultSet = SachDAL.getInstance().laySachTheoMa(maSach);
+        ImageIcon defaultImage = getDefaultImage();
+        Sach sach = null;
+        try {
+            while (resultSet.next()) {
+                sach = new Sach();
+                sach.setMaSach(resultSet.getInt(1));
+                sach.setTenSach(resultSet.getString(2));
+                sach.setTacGia(resultSet.getString(3));
+                sach.setMaNXB(resultSet.getInt(4));
+                sach.setSoTrang(resultSet.getInt(5));
+                byte[] imageData = resultSet.getBytes(6);
+
+                if (imageData == null) {
+                    sach.setAnh(defaultImage);
+                }
+                else
+                {
+                    ByteArrayInputStream inputStream = new ByteArrayInputStream(imageData);
+                    BufferedImage bufferedImage = ImageIO.read(inputStream);
+                    int width = bufferedImage.getWidth();
+                    int height = bufferedImage.getHeight();
+                    if (width > 160 || height > 200) {
+                        Image scaledImage = bufferedImage.getScaledInstance(160, 200, Image.SCALE_SMOOTH);
+                        sach.setAnh(new ImageIcon(scaledImage));
+                    } else {
+                        sach.setAnh(new ImageIcon(bufferedImage));
+                    }
+                }
+
+            }
+            resultSet.close();
+            return sach;
+        } catch (SQLException | IOException e) {
+            return null;
+        }
+    }
     private ImageIcon getDefaultImage()
     {
         URL imageURL = ResourceClass.class.getResource("SachmacDinh.jpg");

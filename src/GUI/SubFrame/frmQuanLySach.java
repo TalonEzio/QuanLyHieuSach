@@ -41,7 +41,7 @@ public class frmQuanLySach  extends  JFrame implements  IGetMainPanel{
     private JButton btnXoa;
     private JLabel lblAnh;
     private JPanel pnlAnh;
-    private  Sach khachHangCurrent;
+    private  Sach current;
     private JTextField txtTimKiem;
     private JButton btnXoaHinh;
 
@@ -104,7 +104,7 @@ public class frmQuanLySach  extends  JFrame implements  IGetMainPanel{
                     cmbNhaXuatBan.setSelectedIndex(sach.getMaNXB() - 1);
                     lblAnh.setIcon(sach.getAnh());
 
-                    khachHangCurrent = bookButton.getSach();
+                    current = bookButton.getSach();
                 }
             });
             pnlCenter.add(bookButton);
@@ -113,7 +113,6 @@ public class frmQuanLySach  extends  JFrame implements  IGetMainPanel{
         pnlCenter.repaint();
 
     }
-    ArrayList<Sach> DSSachDuocChon = new ArrayList<>();
     private void addEvents() {
         cmbLoc.addActionListener(new ActionListener() {
             @Override
@@ -191,13 +190,13 @@ public class frmQuanLySach  extends  JFrame implements  IGetMainPanel{
                 if(validateBefore() == false)return;
 
                 Sach sach = getFromInput();
-                sach.setMaSach(khachHangCurrent.getMaSach());
+                sach.setMaSach(current.getMaSach());
                 TrangThai trangThai = SachBLL.getInstance().capNhatSach(sach);
                 if(trangThai == TrangThai.THANH_CONG)
                 {
                     JOptionPane.showMessageDialog(null,"Cập nhật sách thành công","Trạng thái",JOptionPane.INFORMATION_MESSAGE);
                     resetInput(sach.getMaNXB());
-                    khachHangCurrent = null;
+                    current = null;
                 }
                 else
                 {
@@ -209,13 +208,13 @@ public class frmQuanLySach  extends  JFrame implements  IGetMainPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                TrangThai trangThai = SachBLL.getInstance().xoaSach(khachHangCurrent);
+                TrangThai trangThai = SachBLL.getInstance().xoaSach(current);
                 if(trangThai == TrangThai.THANH_CONG)
                 {
                     JOptionPane.showMessageDialog(null,"Xóa sách thành công","Trạng thái",JOptionPane.INFORMATION_MESSAGE);
-                    resetInput(khachHangCurrent.getMaNXB());
+                    resetInput(current.getMaNXB());
                     pnlCenter.revalidate();
-                    khachHangCurrent = null;
+                    current = null;
                 }
                 else
                 {
@@ -227,7 +226,7 @@ public class frmQuanLySach  extends  JFrame implements  IGetMainPanel{
         btnXoaHinh.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                khachHangCurrent.setAnh(null);
+                current.setAnh(null);
                 lblAnh.setIcon(null);
             }
         });
