@@ -23,6 +23,7 @@ public class frmTrangChu extends JFrame {
     private JPanel pnlMenu;
     private JPanel pnlDetail;
     private JButton btnTrangChu;
+    private JButton btnThongKeDoanhThu;
     private final TaiKhoan taiKhoan;
     private frmDangNhap dangNhap;
 
@@ -93,6 +94,14 @@ public class frmTrangChu extends JFrame {
                 frmTrangChu.this.setTitle("Quản lý khách hàng");
             }
         });
+        btnThongKeDoanhThu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showScreen("frmThongKe");
+                frmTrangChu.this.setTitle("Thống kê doanh thu");
+
+            }
+        });
     }
     void initComponents() {
         this.setContentPane(pnlMain);
@@ -112,7 +121,7 @@ public class frmTrangChu extends JFrame {
         addSubFrame(pnlDetail,new frmKhachHang());
         //add last, show first :>
         addSubFrame(pnlDetail, new frmWelcome(false));
-
+        addSubFrame(pnlDetail,new frmThongKe());
     }
 
     private void addSubFrame(JPanel pnlDetail, JFrame frame) {

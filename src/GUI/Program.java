@@ -13,5 +13,6 @@ public class Program {
         }
         frmDangNhap dangNhap = new frmDangNhap();
         dangNhap.setVisible(true);
+        //new ChartFrame().setVisible(true);
     }
 }
