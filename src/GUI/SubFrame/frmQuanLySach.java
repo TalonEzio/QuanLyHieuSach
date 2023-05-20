@@ -207,7 +207,12 @@ public class frmQuanLySach  extends  JFrame implements  IGetMainPanel{
         btnXoa.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                int choose  = JOptionPane.showConfirmDialog(null,
+                        "Xóa sách ở đây sẽ xóa hết sách trong các hóa đơn!\nBạn vẫn muốn xóa chứ?",
+                        "Cảnh báo",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE);
+                if(choose == JOptionPane.NO_OPTION)return;
                 TrangThai trangThai = SachBLL.getInstance().xoaSach(current);
                 if(trangThai == TrangThai.THANH_CONG)
                 {

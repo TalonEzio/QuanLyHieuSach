@@ -29,7 +29,6 @@ public class frmThongTinTaiKhoan extends  JFrame implements  IGetMainPanel{
     }
 
     private JPanel pnlMain;
-    private JPanel pnlDetail;
     private JLabel lblImage;
     private JButton btnXoaTaiKhoan;
 

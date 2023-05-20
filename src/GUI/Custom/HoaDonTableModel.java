@@ -56,4 +56,10 @@ public class HoaDonTableModel extends AbstractTableModel {
                 return null;
         }
     }
+    public void clearData() {
+        dataSource.clear();
+        fireTableDataChanged();
+    }
+
+
 }

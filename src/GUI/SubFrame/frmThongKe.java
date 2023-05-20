@@ -55,7 +55,7 @@ public class frmThongKe extends JFrame implements IGetMainPanel {
         btnThongKe.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                loadChart(dtpNgayBatDau.getDate(),dtpNgayKetThuc.getDate());
+                loadChart(dtpNgayBatDau.getDate(), dtpNgayKetThuc.getDate());
                 pnlChart.revalidate();
                 pnlChart.repaint();
             }
@@ -67,21 +67,23 @@ public class frmThongKe extends JFrame implements IGetMainPanel {
         categories.clear();
         values.clear();
         ResultSet rs = ThongKeBLL.getInstance().thongKeTheoNgay(dtpNgayBatDau.getDate(), dtpNgayKetThuc.getDate());
-        while(true)
-        {
-            try {
-                if (!rs.next()) break;
-                values.add(rs.getDouble(2));
+
+        try {
+
+            while (rs.next()) {
                 categories.add(rs.getString(1));
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+                values.add(rs.getDouble(2));
             }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         chart.addSeries("Doanh thu (Triệu đồng)", categories, values);
     }
 
     ArrayList<String> categories = new ArrayList<>();
     ArrayList<Double> values = new ArrayList<>();
+
     private void createCharts() {
 
         chart = new CategoryChartBuilder()
@@ -90,12 +92,15 @@ public class frmThongKe extends JFrame implements IGetMainPanel {
                 .yAxisTitle("Doanh thu (Triệu đồng)")
                 .theme(Styler.ChartTheme.Matlab)
                 .build();
-        chart.getStyler().setToolTipsEnabled(true); // Bật hiển thị giá trị
-        chart.getStyler().setLabelsVisible(true); // Bật hiển thị giá trị
-        chart.getStyler().setBaseFont(new Font("UTM AVO", Font.BOLD, 16)); // Định dạng font chữ cho giá trị
+        chart.getStyler().setToolTipsEnabled(true);
+        chart.getStyler().setLabelsVisible(true);
+        Font customFont = new Font("Utm avo", Font.PLAIN, 16);
+        chart.getStyler().setBaseFont(customFont);
+        chart.getStyler().setAxisTitleFont(customFont);
+        chart.getStyler().setLabelsFont(customFont);
+        chart.getStyler().setLegendFont(customFont);
         ResultSet rs = ThongKeBLL.getInstance().thongKeTheoNgay(dtpNgayBatDau.getDate(), dtpNgayKetThuc.getDate());
-        while(true)
-        {
+        while (true) {
             try {
                 if (!rs.next()) break;
                 categories.add(rs.getString(1));
@@ -106,7 +111,7 @@ public class frmThongKe extends JFrame implements IGetMainPanel {
 
         }
         chart.addSeries("Doanh thu (Triệu đồng)", categories, values);
-        pnlChart.add(new XChartPanel<>(chart),BorderLayout.CENTER);
+        pnlChart.add(new XChartPanel<>(chart), BorderLayout.CENTER);
     }
 
     private void createDatePickers() {
@@ -114,13 +119,13 @@ public class frmThongKe extends JFrame implements IGetMainPanel {
         dtpNgayBatDau.setDateFormatString("dd/MM/yyyy");
         pnlNgayBatDau.add(dtpNgayBatDau, BorderLayout.CENTER);
         dtpNgayBatDau.setDate(getDateBefore(1));
-        dtpNgayBatDau.setFont(new Font("UTM AVO",Font.PLAIN,16));
+        dtpNgayBatDau.setFont(new Font("UTM AVO", Font.PLAIN, 16));
 
         dtpNgayKetThuc = new JDateChooser();
         dtpNgayKetThuc.setDateFormatString("dd/MM/yyyy");
         pnlNgayKetThuc.add(dtpNgayKetThuc, BorderLayout.CENTER);
         dtpNgayKetThuc.setDate(getDateBefore(0));
-        dtpNgayKetThuc.setFont(new Font("UTM AVO",Font.PLAIN,16));
+        dtpNgayKetThuc.setFont(new Font("UTM AVO", Font.PLAIN, 16));
 
     }
 

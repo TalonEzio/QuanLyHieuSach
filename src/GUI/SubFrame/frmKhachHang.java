@@ -102,7 +102,8 @@ public class frmKhachHang extends JFrame implements IGetMainPanel {
 
     private JTable cusTomTable(JTable tbl, JPanel parentPanel, AbstractTableModel model) {
         tbl = new JTable(model);
-        tbl.setFont(new Font("UTM AVO",Font.PLAIN,13));
+        tbl.setFont(new Font("UTM AVO",Font.PLAIN,14));
+        tbl.setFillsViewportHeight(true);
         tbl.setShowGrid(true);
         tbl.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -148,9 +149,9 @@ public class frmKhachHang extends JFrame implements IGetMainPanel {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setSize(1200, 600);
         this.setLocationRelativeTo(null);
-
         txtSoLuong.setEditable(false);
         txtTongTien.setEditable(false);
+
     }
 
     private void addEvents() {
@@ -205,6 +206,8 @@ public class frmKhachHang extends JFrame implements IGetMainPanel {
                     JOptionPane.showMessageDialog(null,"Thêm khách hàng mới thành công","Trạng thái",JOptionPane.INFORMATION_MESSAGE);
                     loadDaTa(KhachHangBLL.getInstance().layDanhSachKhachHang(),true);
                     pnlData.revalidate();
+                    loadDaTa(-1);
+
                 }
                 else
                 {
@@ -230,8 +233,11 @@ public class frmKhachHang extends JFrame implements IGetMainPanel {
                     JOptionPane.showMessageDialog(null,"Cập nhật thành công","Trạng thái",JOptionPane.INFORMATION_MESSAGE);
                     loadDaTa(KhachHangBLL.getInstance().layDanhSachKhachHang(),true);
                     pnlData.revalidate();
+                    loadDaTa(-1);
                     khachHangCurrent = null;
+
                 }
+
                 else
                 {
                     JOptionPane.showMessageDialog(null,"Cập nhật thất bại","Trạng thái",JOptionPane.ERROR_MESSAGE);
@@ -259,6 +265,7 @@ public class frmKhachHang extends JFrame implements IGetMainPanel {
                     JOptionPane.showMessageDialog(null,"Xóa thành công","Trạng thái",JOptionPane.INFORMATION_MESSAGE);
                     loadDaTa(KhachHangBLL.getInstance().layDanhSachKhachHang(),true);
                     pnlData.revalidate();
+                    loadDaTa(-1);
                     khachHangCurrent = null;
                 }
                 else
@@ -284,6 +291,7 @@ public class frmKhachHang extends JFrame implements IGetMainPanel {
                             "Trạng thái",
                             JOptionPane.INFORMATION_MESSAGE);
                     loadDaTa(khachHangCurrent.getMaKhachHang());
+
                     pnlData.revalidate();
                 }
                 else
@@ -402,7 +410,9 @@ public class frmKhachHang extends JFrame implements IGetMainPanel {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-
+                KhachHang khachHang =  getDataFromKhachHangTable((JTable) e.getSource());
+                fillValueToEdit(khachHang);
+                loadDaTa(khachHang.getMaKhachHang());
             }
 
             @Override

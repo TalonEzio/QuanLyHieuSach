@@ -105,7 +105,7 @@ public class frmTrangChu extends JFrame {
     }
     void initComponents() {
         this.setContentPane(pnlMain);
-        this.setResizable(false);
+        //this.setResizable(false);
 
         loadSubFrame(pnlDetail);
         setMargin(pnlMenu);
@@ -113,6 +113,9 @@ public class frmTrangChu extends JFrame {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setMinimumSize(new Dimension(1200,600));
         this.setLocationRelativeTo(null);
+
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
     }
 
     private void loadSubFrame(JPanel pnlDetail) {
