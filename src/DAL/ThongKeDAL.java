@@ -23,5 +23,16 @@ public class ThongKeDAL {
             throw new RuntimeException(e);
         }
     }
+    public ResultSet thongKePhanTramSachTheoNXB(int maNXB,int nam)
+    {
+        try
+        {
+            CallableStatement cstmt = DatabaseAccess.getInstance().getConnection().prepareCall("{call usp_ThongKePhanTramSachTheoNXB(?,?)}");
+            ResultSet rs = DatabaseAccess.getInstance().getData(cstmt,new Object[]{maNXB,nam});
+            return rs;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

@@ -16,5 +16,8 @@ public class ThongKeBLL {
     public ResultSet thongKeTheoNgay(Date ngayBatDau, Date ngayKetThuc) {
         return ThongKeDAL.getInstance().thongKeTheoNgay(ngayBatDau, ngayKetThuc);
     }
-
+    public ResultSet thongKePhanTramSachTheoNXB(int maNXB,int nam)
+    {
+        return ThongKeDAL.getInstance().thongKePhanTramSachTheoNXB(maNXB,nam);
+    }
 }

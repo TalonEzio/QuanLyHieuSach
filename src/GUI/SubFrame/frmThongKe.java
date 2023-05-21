@@ -1,13 +1,16 @@
 package GUI.SubFrame;
 
+import BLL.NhaXuatBanBLL;
 import BLL.ThongKeBLL;
+import DTO.NhaXuatBan;
 import com.toedter.calendar.JDateChooser;
-import org.knowm.xchart.CategoryChart;
-import org.knowm.xchart.CategoryChartBuilder;
-import org.knowm.xchart.XChartPanel;
+import org.knowm.xchart.*;
+import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.Styler;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,18 +19,26 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class frmThongKe extends JFrame implements IGetMainPanel {
     private JPanel pnlMain;
-    private JPanel pnlNorth;
-    private JPanel pnlCenter;
+    private JPanel pnlNorthTop;
     private JPanel pnlNgayBatDau;
     private JPanel pnlNgayKetThuc;
     private JPanel pnlChart;
     private JButton btnThongKe;
+    private JPanel pnlChartTop;
+    private JPanel pnlCenterTop;
+    private JPanel pnlChartBottom;
+    private JPanel pnlCenterBottom;
+    private JComboBox cmbNhaXuatBan;
+    private JPanel pnlNam;
     JDateChooser dtpNgayBatDau, dtpNgayKetThuc;
-    private CategoryChart chart;
+    private CategoryChart categoryChart;
+    private PieChart pieChart;
+    private JSpinner spinner;
 
     @Override
     public JPanel getMainPanel() {
@@ -42,28 +53,61 @@ public class frmThongKe extends JFrame implements IGetMainPanel {
     public frmThongKe() {
         initComponents();
         createControls();
+        cmbNhaXuatBan.setSelectedIndex(0);
+        btnThongKe.doClick();
     }
 
     private void createControls() {
         createDatePickers();
+        loadComboBox();
+        customSpinner();
         createCharts();
         addEvents();
 
+    }
+
+    private void loadComboBox() {
+        DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel();
+        comboBoxModel.addAll(NhaXuatBanBLL.getInstance().layNXB());
+        cmbNhaXuatBan.setModel(comboBoxModel);
+        cmbNhaXuatBan.setSelectedIndex(0);
+    }
+
+    private void customSpinner() {
+        Calendar calendar = Calendar.getInstance();
+        int nowYear = calendar.get(Calendar.YEAR);
+        SpinnerNumberModel spinnerModel = new SpinnerNumberModel(nowYear, nowYear - 4, nowYear, 1);
+        spinner = new JSpinner(spinnerModel);
+        spinner.setFont(new Font("UTM Avo",Font.PLAIN,16));
+        pnlNam.add(spinner,BorderLayout.CENTER);
     }
 
     private void addEvents() {
         btnThongKe.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                loadChart(dtpNgayBatDau.getDate(), dtpNgayKetThuc.getDate());
+                loadCategoryChart(dtpNgayBatDau.getDate(), dtpNgayKetThuc.getDate());
                 pnlChart.revalidate();
                 pnlChart.repaint();
             }
         });
+        cmbNhaXuatBan.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadPieChart();
+            }
+        });
+        spinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                loadPieChart();
+            }
+        });
+
     }
 
-    private void loadChart(Date ngayBatDauDate, Date ngayketThuc) {
-        chart.removeSeries("Doanh thu (Triệu đồng)");
+    private void loadCategoryChart(Date ngayBatDauDate, Date ngayketThuc) {
+        categoryChart.removeSeries("Doanh thu (Triệu đồng)");
         categories.clear();
         values.clear();
         ResultSet rs = ThongKeBLL.getInstance().thongKeTheoNgay(dtpNgayBatDau.getDate(), dtpNgayKetThuc.getDate());
@@ -78,40 +122,74 @@ public class frmThongKe extends JFrame implements IGetMainPanel {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        chart.addSeries("Doanh thu (Triệu đồng)", categories, values);
+        categoryChart.addSeries("Doanh thu (Triệu đồng)", categories, values);
     }
+    private  void loadPieChart()    {
+        if(cmbNhaXuatBan.getSelectedIndex() == -1)return;
 
+        int maNXB =((NhaXuatBan)cmbNhaXuatBan.getSelectedItem()).getMaNXB();
+        int nam = (int)spinner.getValue();
+        pieChart.getSeriesMap().clear();
+        ResultSet rs = ThongKeBLL.getInstance().thongKePhanTramSachTheoNXB(maNXB,nam);
+        int i = 1;
+        double sum = 100;
+        while (true) {
+            try {
+                if (!rs.next()) break;
+                double value = rs.getDouble(3);
+                String formatContent = String.format("Top %d: %s (%.2f triệu đồng)",i++,rs.getString(1),rs.getDouble(2));
+                pieChart.addSeries(formatContent,value);
+                sum -= value;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        if(sum != 0) pieChart.addSeries("Các sản phẩm khác",sum);
+        pnlChartBottom.repaint();
+        pnlChartBottom.revalidate();
+
+    }
     ArrayList<String> categories = new ArrayList<>();
     ArrayList<Double> values = new ArrayList<>();
 
     private void createCharts() {
 
-        chart = new CategoryChartBuilder()
-                .title("Biểu đồ thống kê doanh thu theo nhà xuất bản")
-                .xAxisTitle("Nhà xuất bản")
-                .yAxisTitle("Doanh thu (Triệu đồng)")
-                .theme(Styler.ChartTheme.Matlab)
-                .build();
-        chart.getStyler().setToolTipsEnabled(true);
-        chart.getStyler().setLabelsVisible(true);
-        Font customFont = new Font("Utm avo", Font.PLAIN, 16);
-        chart.getStyler().setBaseFont(customFont);
-        chart.getStyler().setAxisTitleFont(customFont);
-        chart.getStyler().setLabelsFont(customFont);
-        chart.getStyler().setLegendFont(customFont);
-        ResultSet rs = ThongKeBLL.getInstance().thongKeTheoNgay(dtpNgayBatDau.getDate(), dtpNgayKetThuc.getDate());
-        while (true) {
-            try {
-                if (!rs.next()) break;
-                categories.add(rs.getString(1));
-                values.add(rs.getDouble(2));
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+        createCategoriesChart();
+        createPiesChart();
+    }
 
-        }
-        chart.addSeries("Doanh thu (Triệu đồng)", categories, values);
-        pnlChart.add(new XChartPanel<>(chart), BorderLayout.CENTER);
+
+
+    private void createCategoriesChart() {
+        categoryChart = new CategoryChartBuilder()
+                .title("Biểu đồ thống kê doanh thu theo nhà xuất bản")
+                .yAxisTitle("Doanh thu (Triệu đồng)")
+                //.theme(Styler.ChartTheme.XChart)
+                .build();
+        categoryChart.getStyler().setToolTipsEnabled(true);
+        categoryChart.getStyler().setLabelsVisible(true);
+        Font customFont = new Font("Utm avo", Font.PLAIN, 16);
+        categoryChart.getStyler().setBaseFont(customFont);
+        categoryChart.getStyler().setAxisTitleFont(customFont);
+        categoryChart.getStyler().setLabelsFont(customFont);
+        categoryChart.getStyler().setLegendFont(customFont);
+        categoryChart.getStyler().setLabelsFontColor(Color.WHITE);
+        categoryChart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNW);
+
+        pnlCenterTop.add(new XChartPanel<>(categoryChart), BorderLayout.CENTER);
+    }
+    private void createPiesChart() {
+        pieChart = new PieChartBuilder().width(500).height(400).build();
+        PieStyler styler = pieChart.getStyler();
+        Font font = new Font("UTM Avo", Font.PLAIN, 16);
+        styler.setLegendFont(font);
+        styler.setChartTitleFont(font);
+        styler.setLabelsFont(font);
+        styler.setBaseFont(font);
+        styler.setBaseFont(font);
+        styler.setLegendPadding(10);
+        pnlChartBottom.add(new XChartPanel<>(pieChart),BorderLayout.CENTER);
+        cmbNhaXuatBan.setSelectedIndex(0);
     }
 
     private void createDatePickers() {

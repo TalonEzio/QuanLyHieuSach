@@ -11,8 +11,13 @@ import java.util.List;
 public class ChartFrame extends JFrame {
     public ChartFrame() {
         List<String> categories = new ArrayList<>();
+        categories.add("A");categories.add("B");categories.add("B");categories.add("D");categories.add("E");
 
         List<Double> values = new ArrayList<>();
+        values.add(1.0);        values.add(2.0);
+        values.add(5.0);
+        values.add(3.0);        values.add(4.0);
+
 
         CategoryChart chart = new CategoryChartBuilder()
                 .width(800)

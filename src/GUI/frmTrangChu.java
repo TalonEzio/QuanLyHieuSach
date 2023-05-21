@@ -122,9 +122,10 @@ public class frmTrangChu extends JFrame {
         addSubFrame(pnlDetail, new frmThongTinTaiKhoan(false));
         addSubFrame(pnlDetail,new frmQuanLySach());
         addSubFrame(pnlDetail,new frmKhachHang());
+        addSubFrame(pnlDetail,new frmThongKe());
+
         //add last, show first :>
         addSubFrame(pnlDetail, new frmWelcome(false));
-        addSubFrame(pnlDetail,new frmThongKe());
     }
 
     private void addSubFrame(JPanel pnlDetail, JFrame frame) {

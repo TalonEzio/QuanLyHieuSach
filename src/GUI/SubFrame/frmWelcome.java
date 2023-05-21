@@ -1,16 +1,28 @@
 package GUI.SubFrame;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class frmWelcome extends JFrame implements IGetMainPanel{
 
     private JPanel pnlFull;
+    private JLabel lblImage;
 
     public frmWelcome(boolean visible)
     {
         initComponents();
         this.setVisible(visible);
+        customImage();
 
+    }
+
+    private void customImage() {
+        ImageIcon icon = (ImageIcon) lblImage.getIcon();
+        int labelWidth = lblImage.getPreferredSize().width;
+        int labelHeight = lblImage.getPreferredSize().height;
+        Image scaledImage = icon.getImage().getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        lblImage.setIcon(icon);
     }
 
     private void initComponents() {
